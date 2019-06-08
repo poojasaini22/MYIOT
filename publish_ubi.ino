@@ -10,12 +10,9 @@ Adafruit_Si7021 sensor = Adafruit_Si7021();
 /****************************************
  * Define Constants
  ****************************************/
-#define TOKEN "A1E-DEb67qiQPtT7MHMMMoK9ldh2L4FfwP" // Your Ubidots TOKEN
-#define WIFINAME "RoboIndiaExt" //Your SSID
-#define WIFIPASS "786#robo" // Your Wifi Pass
-/*#define MQTT_CLIENT_NAME " client_test_1"
-*/
-
+#define TOKEN "...." // Your Ubidots TOKEN
+#define WIFINAME "...." //Your SSID
+#define WIFIPASS "...." // Your Wifi Pass
 
 Ubidots client(TOKEN);
 float temp=0.0;
@@ -56,27 +53,11 @@ void loop() {
   if(!client.connected()){
       client.reconnect();
       }
-     temp = sensor.readTemperature();
+     temp = sensor.readTemperature();//reading temperature from sensor
      Serial.println(temp);
-     /*temp=sensor.getTempCByIndex(0);
-  
-  //Serial.println(sensor.getTempCByIndex(0));
-  // Publish values to 2 different data sources*/
   
   client.add("temperature", temp); //Insert your variable Labels and the value to be sent
   client.ubidotsPublish("esp8266");
- /* client.add("temperature", temp);*/
-  /*client.add("more-stuff", 120.2);
-  client.ubidotsPublish("source2");*/
-  /*String poster= "{\"temperature\": "+String(tem)+"}\r\n\r\n";
-  int len=poster.length();
-  Serial.println(poster);
-  String post = "POST /api/v1.6/devices/esp8266/?token="+TOKEN+" HTTP/1.1\r\n";
-    */     
-  /*char context[25];
-  sprintf(context, "\"lat\":1.2343, \"lng\":132.1233");
-  client.add(temperature, 1, temp);
-  client.sendAll();*/
   client.loop();
   delay(500);
   }
